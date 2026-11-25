@@ -1,0 +1,26 @@
+# V15 external-loop topology. Values beginning with @ resolve once from the input card.
+MSR_TOPOLOGY|2
+META|MSRE_SINGLE_LOOP_BRIGGS_VOLUME|1|MSRE|MSRE_SINGLE_LOOP|F|1|0|V14_MSRE_BRIGGS70P5
+
+# COMP|loop|order|key|kind|role|name|id|module|nodes|volume|length|diameter|removal|core_ref|material|coating
+COMP|FUEL|1|fuel_core|CORE_MSRE|CORE|MSRE_Core|1|1|0|0|0|0|F|NONE|HASTELLOY_N|VESSEL
+COMP|FUEL|2|pump_bowl|BOWL|PUMP_BOWL|MSRE_Bowl|2|1|0|@FUEL_BOWL|0|0|T|NONE|HASTELLOY_N|VESSEL
+COMP|FUEL|3|upper_plenum|BOWL|UPPER_PLENUM|Upper_Plenum|3|1|0|@UPPER_PLENUM|0|0|F|NONE|HASTELLOY_N|VESSEL
+COMP|FUEL|4|hot_leg|PIPE|HOT_LEG|Hot_Leg|4|1|CFL:N_HL|@HL_VOLUME|@HL_LENGTH|@HL_DIAMETER|F|NONE|HASTELLOY_N|PIPE
+COMP|FUEL|5|transfer_pipe|PIPE|TRANSFER_PIPE|Primary_Pipe|5|1|CFL:N_PP|@PP_VOLUME|@PP_LENGTH|@PP_DIAMETER|F|NONE|HASTELLOY_N|PIPE
+COMP|FUEL|6|fuel_hx|HX|HEAT_EXCHANGER|Heat_Exchanger|6|1|FIXED:N_HX|@FUEL_HX|0|0|F|NONE|HASTELLOY_N|HX_SHELL
+COMP|FUEL|7|cold_leg|COLD_LEG|COLD_LEG|Cold_Leg|7|1|CFL:N_CL|@CL_VOLUME|@CL_LENGTH|@CL_DIAMETER|F|NONE|HASTELLOY_N|PIPE
+COMP|FUEL|8|downcomer|BOWL|DOWNCOMER|Vessel_Inlet_Downcomer|8|1|0|@DOWNCOMER|0|0|F|NONE|HASTELLOY_N|VESSEL
+COMP|FUEL|9|lower_plenum|BOWL|LOWER_PLENUM|Lower_Plenum|9|1|0|@LOWER_PLENUM|0|0|F|NONE|HASTELLOY_N|VESSEL
+COMP|FUEL|10|core_holdup|BOWL|CORE_HOLDUP|Core_Nonchannel_Holdup|10|1|0|@CORE_HOLDUP|0|0|F|NONE|HASTELLOY_N|VESSEL
+
+LINK|FUEL|fuel_core|core_holdup|1.0
+LINK|FUEL|upper_plenum|fuel_core|1.0
+LINK|FUEL|hot_leg|upper_plenum|1.0
+LINK|FUEL|pump_bowl|hot_leg|1.0
+LINK|FUEL|transfer_pipe|pump_bowl|1.0
+LINK|FUEL|fuel_hx|transfer_pipe|1.0
+LINK|FUEL|cold_leg|fuel_hx|1.0
+LINK|FUEL|downcomer|cold_leg|1.0
+LINK|FUEL|lower_plenum|downcomer|1.0
+LINK|FUEL|core_holdup|lower_plenum|1.0
